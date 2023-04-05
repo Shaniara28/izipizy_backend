@@ -11,21 +11,24 @@ const mainRouter = require("./routes/index")
 const app = express()
 const port = process.env.PORT
 
-app.use(cors())
-app.options('*', cors())
+app.use(cors({
+  origin: 'https://mama-recipe-izipizy.vercel.app',
+  methods: "GET, PUT, POST, DELETE",
+  credentials: true
+}))
+
 app.use(express.json())
 app.use(morgan("dev"))
 app.use(helmet())
 app.use(xss())
 
-app.use((req, res, next) => {
-  const allowedOrigins = ["https://mama-recipe-izipizy.vercel.app"]
-  const origin = req.headers.origin
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin)
-  }
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+app.use((err, req, res, next) => {
+  const messageError = err.message || "internal server error"
+  const statusCode = err.status || 500
+
+  res.status(statusCode).json({
+    message: messageError
+  })
   next()
 })
 
