@@ -25,6 +25,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(cors({
+  methods: ["GET", "PUT", "POST", "DELETE"]
+}));
+
 app.use("/api/v1", mainRouter)
 
 // app.use("/img", express.static("upload"))
