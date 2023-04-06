@@ -12,7 +12,7 @@ const app = express()
 const port = process.env.PORT
 
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['https://izipizybackend-production.up.railway.app'],
   methods: "GET, PUT, POST, DELETE",
   credentials: true
 }))
