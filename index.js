@@ -12,7 +12,7 @@ const app = express()
 const port = process.env.PORT
 
 app.use(cors({
-  origin: ['https://izipizybackend-production.up.railway.app'],
+  origin: ['https://mama-recipe-izipizy.vercel.app'],
   methods: "GET, PUT, POST, DELETE",
   credentials: true
 }))
