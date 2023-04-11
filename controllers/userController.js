@@ -26,6 +26,7 @@ const userController = {
         email,
         password: hashPassword,
         phone_number: phone,
+        image_profile: 'https://res.cloudinary.com/dklpoff31/image/upload/v1681229400/default_jqkcpg.jpg'
       }
       const result = await userModel.insertUser(data)
       commonHelper.response(res, result.rows, 201, "Register has been success")
@@ -106,9 +107,7 @@ const userController = {
     }
 
     if (req.file) {
-      const imageUrl = await cloudinary.uploader.upload(req.file.path, {
-        folder: "izipizy",
-      });
+      const imageUrl = await cloudinary.uploader.upload(req.file.path);
       imageProfile = imageUrl.secure_url;
     }
 
