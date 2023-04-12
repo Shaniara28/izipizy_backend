@@ -105,10 +105,11 @@ const userController = {
     }
 
     const dataPw = await userModel.findId(id);
+    const image = req.files.image[0]
 
     if (req.file) {
-      const imageUrl = await uploadPhotoCloudinary(req.file.path);
-      imageProfile = imageUrl.secure_url;
+      const imageUrl = await uploadFile(image, "image/jpeg")
+      imageProfile = `https://drive.google.com/uc?id=${imageUrl.id}`;
     }
 
     const updatedData = {
