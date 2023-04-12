@@ -6,7 +6,7 @@ const authHelper = require("../helper/auth")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
-var cloudinary = require("../config/cloudinary")
+const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
 
 const userController = {
   registerUser: async (req, res) => {
@@ -38,9 +38,7 @@ const userController = {
   loginUser: async (req, res) => {
     try {
       const { email, password } = req.body
-      const {
-        rows: [user],
-      } = await userModel.findEmail(email)
+      const { rows: [user] } = await userModel.findEmail(email)
       if (!user) {
         return res.json({
           message: "Email is invalid",
@@ -106,12 +104,12 @@ const userController = {
       newData.password = await bcrypt.hash(password, saltRounds);
     }
 
+    const dataPw = await userModel.findId(id);
+
     if (req.file) {
-      const imageUrl = await cloudinary.uploader.upload(req.file.path);
+      const imageUrl = await uploadPhotoCloudinary(req.file.path);
       imageProfile = imageUrl.secure_url;
     }
-
-    const dataPw = await userModel.findId(id);
 
     const updatedData = {
       name: newData.name || dataPw.rows[0].name,
@@ -129,7 +127,7 @@ const userController = {
       image_profile: updatedData.image_profile,
     };
 
-    commonHelper.response(res, responseData, 200, "Edit profile is successful");
+    return commonHelper.response(res, responseData, 200, "Edit profile is successful");
   },
 }
 

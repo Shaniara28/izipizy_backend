@@ -123,7 +123,7 @@ const recipeController = {
       user_id: userId,
     }
 
-    recipeModel
+    return recipeModel
       .insertRecipe(data)
       .then((result) => {
         commonHelper.response(res, result.rows, 201, "Recipe has been created")
