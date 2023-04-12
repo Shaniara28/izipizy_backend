@@ -6,7 +6,8 @@ const authHelper = require("../helper/auth")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
-const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
+const { uploadFile } = require("../config/googleDrive.config")
+// const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
 
 const userController = {
   registerUser: async (req, res) => {
