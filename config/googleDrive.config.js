@@ -108,25 +108,7 @@ async function updateFile(file, mimeType, id) {
     throw error
   }
 }
-async function updateFileProfile(file, mimeType, id) {
-  const media = {
-    mimeType: mimeType,
-    body: fs.createReadStream(file.path),
-  }
 
-  try {
-    const response = await driveService.files.update({
-      fileId: id,
-      media: media,
-      fields: "id",
-    })
-
-    return response.data
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
 
 /**
  * Deletes a file from Google Drive.
@@ -151,6 +133,5 @@ module.exports = {
   deleteFile,
   uploadFile,
   uploadFileProfile,
-  updateFileProfile,
   auth,
 }

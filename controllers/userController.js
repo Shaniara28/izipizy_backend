@@ -6,7 +6,7 @@ const authHelper = require("../helper/auth")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
-const { uploadFile, uploadFileProfile, updateFileProfile } = require("../config/googleDrive.config")
+const { uploadFile, uploadFileProfile, deleteFile, updateFile } = require("../config/googleDrive.config")
 // const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
 
 const userController = {
@@ -21,13 +21,15 @@ const userController = {
       }
       const hashPassword = await bcrypt.hash(password, saltRounds)
       const id = uuid.v4()
+
+      // upload google cloud
+
       const data = {
         id,
         name,
         email,
         password: hashPassword,
         phone_number: phone,
-        image_profile: 'https://res.cloudinary.com/dklpoff31/image/upload/v1681229400/default_jqkcpg.jpg'
       }
       const result = await userModel.insertUser(data)
       commonHelper.response(res, result.rows, 201, "Register has been success")
@@ -104,13 +106,21 @@ const userController = {
     if (password) {
       newData.password = await bcrypt.hash(password, saltRounds);
     }
-
-    const dataPw = await userModel.findId(id);
     const image = req.file
+    const dataPw = await userModel.findId(id);
+    const { rows: [cekUser] } = dataPw
+    const imageSplit = cekUser?.image_profile.split("=")[1]
 
     if (req.file) {
-      const imageUrl = await uploadFileProfile(image, "image/jpeg")
-      imageProfile = `https://drive.google.com/uc?id=${imageUrl.id}`;
+      if (!cekUser?.image_profile) {
+        const imageUrl = await uploadFile(image, "image/jpeg")
+        imageProfile = `https://drive.google.com/uc?id=${imageUrl.id}`;
+      } else {
+        const imageUrl = await updateFile(image, "image/jpeg", imageSplit)
+        imageProfile = `https://drive.google.com/uc?id=${imageUrl.id}`;
+      }
+    } else {
+      imageProfile = cekUser?.image_profile
     }
 
     const updatedData = {
