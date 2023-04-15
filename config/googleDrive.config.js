@@ -57,6 +57,30 @@ async function uploadFile(file, mimeType) {
     throw error
   }
 }
+async function uploadFileProfile(file, mimeType) {
+  const fileMetadata = {
+    name: file.filename,
+    parents: ["1q_0ZvlsXpMRIZS69givTd2UeqwDwAfzg"],
+  }
+
+  const media = {
+    mimeType: mimeType,
+    body: fs.createReadStream(file.path),
+  }
+
+  try {
+    const response = await driveService.files.create({
+      resource: fileMetadata,
+      media: media,
+      fields: "id",
+    })
+
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
 
 /**
  * Updates a file in Google Drive.
@@ -66,6 +90,25 @@ async function uploadFile(file, mimeType) {
  * @returns {Promise<object>} A Promise that resolves to the file metadata of the updated file.
  */
 async function updateFile(file, mimeType, id) {
+  const media = {
+    mimeType: mimeType,
+    body: fs.createReadStream(file.path),
+  }
+
+  try {
+    const response = await driveService.files.update({
+      fileId: id,
+      media: media,
+      fields: "id",
+    })
+
+    return response.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+async function updateFileProfile(file, mimeType, id) {
   const media = {
     mimeType: mimeType,
     body: fs.createReadStream(file.path),
@@ -107,5 +150,7 @@ module.exports = {
   updateFile,
   deleteFile,
   uploadFile,
+  uploadFileProfile,
+  updateFileProfile,
   auth,
 }

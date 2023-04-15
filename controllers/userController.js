@@ -6,7 +6,7 @@ const authHelper = require("../helper/auth")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
-const { uploadFile } = require("../config/googleDrive.config")
+const { uploadFile, uploadFileProfile, updateFileProfile } = require("../config/googleDrive.config")
 // const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
 
 const userController = {
@@ -106,10 +106,10 @@ const userController = {
     }
 
     const dataPw = await userModel.findId(id);
-    const image = req.files.image[0]
+    const image = req.file
 
     if (req.file) {
-      const imageUrl = await uploadFile(image, "image/jpeg")
+      const imageUrl = await uploadFileProfile(image, "image/jpeg")
       imageProfile = `https://drive.google.com/uc?id=${imageUrl.id}`;
     }
 
