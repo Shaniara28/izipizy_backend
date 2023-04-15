@@ -12,7 +12,7 @@ const app = express()
 const port = process.env.PORT
 
 app.use(cors({
-  origin: ['https://mama-recipe-izipizy.vercel.app'],
+  origin: ['https://mama-recipe-izipizy.vercel.app', 'http://localhost:3000'],
   methods: "GET, PUT, POST, DELETE",
   credentials: true
 }))
