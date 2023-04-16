@@ -44,11 +44,9 @@ app.use((err, req, res, next) => {
 app.use("/api/v1", mainRouter)
 
 // app.use("/img", express.static("upload"))
-
 app.all("*", (req, res, next) => {
   next(new createError.NotFound())
 })
-
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`)

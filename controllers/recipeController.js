@@ -3,7 +3,7 @@ const commonHelper = require("../helper/common")
 const uuid = require("uuid")
 // var cloudinary = require("../config/cloudinary")
 const moment = require("moment")
-const { uploadFile } = require("../config/googleDrive.config")
+const { uploadFile, deleteFile } = require("../config/googleDrive.config")
 // const { updatePhoto } = require("../config/googleDrive.config")
 
 const recipeController = {
@@ -181,7 +181,7 @@ const recipeController = {
       }
 
       data.id = id
-      recipeModel
+      return recipeModel
         .updateRecipe(updateQuery, data)
         .then(() => {
           recipeModel
@@ -200,7 +200,7 @@ const recipeController = {
   deleteRecipe: async (req, res) => {
     try {
       const id = req.params.id
-      const { rowCount, rows } = await recipeModel.findId(id)
+      const { rowCount, rows: [cekUser] } = await recipeModel.findId(id)
       if (!rowCount) {
         return commonHelper.response(res, null, 404, "Recipe not found")
       }
@@ -209,13 +209,19 @@ const recipeController = {
       const userId = req.payload.id
 
       // Check if the user ID of the decoded token matches the user ID of the recipe
-      if (rows[0].user_id !== userId) {
+      if (cekUser?.user_id !== userId) {
         return commonHelper.response(res, null, 401, "You are not authorized to delete this recipe")
       }
 
+      const imageSplit = cekUser?.image.split("=")[1]
+      const videoSplit = cekUser?.video.split("=")[1]
+
+      await deleteFile(imageSplit)
+      await deleteFile(videoSplit)
+
       await recipeModel.deleteRecipe(id)
 
-      commonHelper.response(res, null, 200, "Recipe has been deleted")
+      return commonHelper.response(res, null, 200, "Recipe has been deleted")
     } catch (error) {
       console.log(error)
     }

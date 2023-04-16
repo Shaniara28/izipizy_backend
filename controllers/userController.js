@@ -6,7 +6,7 @@ const authHelper = require("../helper/auth")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
-const { uploadFile, uploadFileProfile, deleteFile, updateFile } = require("../config/googleDrive.config")
+const { uploadFile, deleteFile, updateFile } = require("../config/googleDrive.config")
 // const { uploadPhotoCloudinary, deletePhotoCloudinary } = require("../config/cloudinary")
 
 const userController = {
@@ -22,8 +22,6 @@ const userController = {
       const hashPassword = await bcrypt.hash(password, saltRounds)
       const id = uuid.v4()
 
-      // upload google cloud
-
       const data = {
         id,
         name,
@@ -32,7 +30,7 @@ const userController = {
         phone_number: phone,
       }
       const result = await userModel.insertUser(data)
-      commonHelper.response(res, result.rows, 201, "Register has been success")
+      return commonHelper.response(res, result.rows, 201, "Register has been success")
     } catch (err) {
       res.send(err)
     }
@@ -61,7 +59,7 @@ const userController = {
       // console.log(payload)
       user.token = authHelper.generateToken(payload)
       user.refreshToken = authHelper.generateRefreshToken(payload)
-      commonHelper.response(res, user, 201, "login is successful")
+      return commonHelper.response(res, user, 201, "login is successful")
     } catch (err) {
       res.send(err)
     }
@@ -77,7 +75,7 @@ const userController = {
       token: authHelper.generateToken(payload),
       refreshToken: authHelper.generateRefreshToken(payload),
     }
-    commonHelper.response(res, result, 200, "Get refresh token is successful")
+    return commonHelper.response(res, result, 200, "Get refresh token is successful")
   },
 
   profileUser: async (req, res) => {
@@ -86,7 +84,7 @@ const userController = {
       rows: [user],
     } = await userModel.findEmail(email)
     delete user.password
-    commonHelper.response(res, user, 200, "Get data profile is successful")
+    return commonHelper.response(res, user, 200, "Get data profile is successful")
   },
 
   editProfile: async (req, res) => {

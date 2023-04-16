@@ -42,7 +42,7 @@ const recipeController = {
         saves: row.saves,
       }))
 
-      commonHelper.response(res, data, 200, "Get data success", pagination)
+      return commonHelper.response(res, data, 200, "Get data success", pagination)
     } catch (err) {
       res.json({ message: err.message })
     }
@@ -67,7 +67,7 @@ const recipeController = {
           created_at: moment(like.created_at).format("DD MMMM YYYY HH:mm"),
         }
       })
-      commonHelper.response(res, responseData, 200, "Get data Recipe by user success")
+      return commonHelper.response(res, responseData, 200, "Get data Recipe by user success")
     } catch (err) {
       res.json({ message: err.message })
     }
@@ -178,7 +178,7 @@ const recipeController = {
       }
 
       data.id = id
-      recipeModel
+      return recipeModel
         .updateRecipe(updateQuery, data)
         .then(() => {
           recipeModel
@@ -197,7 +197,7 @@ const recipeController = {
   deleteRecipe: async (req, res) => {
     try {
       const id = req.params.id
-      const { rowCount, rows } = await recipeModel.findId(id)
+      const { rowCount, rows: [cekUser] } = await recipeModel.findId(id)
       if (!rowCount) {
         return commonHelper.response(res, null, 404, "Recipe not found")
       }
@@ -212,7 +212,7 @@ const recipeController = {
 
       await recipeModel.deleteRecipe(id)
 
-      commonHelper.response(res, null, 200, "Recipe has been deleted")
+      return commonHelper.response(res, null, 200, "Recipe has been deleted")
     } catch (error) {
       console.log(error)
     }

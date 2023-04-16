@@ -57,30 +57,6 @@ async function uploadFile(file, mimeType) {
     throw error
   }
 }
-async function uploadFileProfile(file, mimeType) {
-  const fileMetadata = {
-    name: file.filename,
-    parents: ["1q_0ZvlsXpMRIZS69givTd2UeqwDwAfzg"],
-  }
-
-  const media = {
-    mimeType: mimeType,
-    body: fs.createReadStream(file.path),
-  }
-
-  try {
-    const response = await driveService.files.create({
-      resource: fileMetadata,
-      media: media,
-      fields: "id",
-    })
-
-    return response.data
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
 
 /**
  * Updates a file in Google Drive.
@@ -132,6 +108,5 @@ module.exports = {
   updateFile,
   deleteFile,
   uploadFile,
-  uploadFileProfile,
   auth,
 }
