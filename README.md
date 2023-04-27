@@ -66,7 +66,7 @@ This is an example of how to list things you need to use the software and how to
 
 - Clone This Back End Repo
 ```
-git clone  https://github.com/preedok/izipizy_backend
+git clone https://github.com/hosealeonardo18/izipizy_backend
 ```
 - Go To Folder Repo
 ```
