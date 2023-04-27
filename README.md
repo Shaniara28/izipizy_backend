@@ -111,7 +111,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## Endpoint List
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/23292228/2s93RUvsS7)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/24895506/2s93eR5bCp)
 
 
 ## Related Project
