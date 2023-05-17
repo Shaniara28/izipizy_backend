@@ -7,7 +7,7 @@
   <p align="center">
     <a href="https://github.com/Shaniara28/izipizy_backend"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="https://izipizybackend-production.up.railway.app">View Demo</a>
+    <a href="https://mama-recipe-izipizy.vercel.app/">View Demo</a>
     ·
     <a href="">Report Bug</a>
     ·
