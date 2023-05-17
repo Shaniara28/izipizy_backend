@@ -5,7 +5,7 @@
 </div>
   <h3 align="center">Backend Izipizy Food Recipe</h3>
   <p align="center">
-    <a href="https://github.com/hosealeonardo18/izipizy_backend"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Shaniara28/izipizy_backend"><strong>Explore the docs »</strong></a>
     <br />
     <a href="https://izipizybackend-production.up.railway.app">View Demo</a>
     ·
@@ -115,15 +115,15 @@ Contributions are what make the open source community such an amazing place to b
 
 
 ## Related Project
-:rocket: [`Backend Food Recipe`](https://github.com/hosealeonardo18/izipizy_backend)
+:rocket: [`Backend Food Recipe`](https://github.com/Shaniara28/izipizy_backend)
 
-:rocket: [`Frontend Food Recipe`](https://github.com/hosealeonardo18/izipizy-FE)
+:rocket: [`Frontend Food Recipe`](https://github.com/Shaniara28/izipizy-FE)
 
 :rocket: [`Demo Food Recipe`](https://mama-recipe-izipizy.vercel.app/)
 
 <!-- CONTACT -->
 ## Contact
 
-My Email : hosealeonardo18@gmail.com
-
-Project Link: [https://github.com/hosealeonardo18/izipizy_backend](https://github.com/hosealeonardo18/izipizy_backend)
+My Email : saniarizkiagustin@gmail.com
+<br/>
+Project Link: [https://github.com/Shaniara28/izipizy_backend](https://github.com/Shaniara28/izipizy_backend)
